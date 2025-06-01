@@ -43,14 +43,14 @@ export type Event = {
   period: string;
 };
 
-export type Integration = {
-  id: string;
-  name: string;
-  description: string;
-  category: string;
-  icon: React.ComponentType;
-  color: string;
-};
+// export type Integration = {
+//   id: string;
+//   name: string;
+//   description: string;
+//   category: string;
+//   icon: React.ComponentType;
+//   color: string;
+// };
 
 export const categories = [
   "All",
