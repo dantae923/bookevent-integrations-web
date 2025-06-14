@@ -10,10 +10,10 @@ export default function CategoryFilter({ categories, selectedCategory, onSelectC
   return (
     <aside className="w-48 bg-white shadow-md flex flex-col h-screen">
       <div className="p-4">
-        <h2 className="text-lg font-semibold mb-2">Categories</h2>
+        <h2 className="text-lg font-semibold mb-2 caret-transparent">사이트 목록</h2>
       </div>
-      <div className="flex-1 overflow-auto">
-        <div className="space-y-1 p-4 pt-0">
+      <div className="flex-1 overflow-auto caret-transparent">
+        <div className="space-y-1 p-4 pt-2">
           {categories.map((category) => (
             <Button
               key={category}

@@ -59,7 +59,7 @@ export default function IntegrationsPage() {
       />
       <main className="flex-1 flex flex-col overflow-hidden">
         <div className="p-4 md:p-6 space-y-4">
-          <h1 className="text-2xl font-bold">📚 도서 행사 모아보기</h1>
+          <h1 className="text-2xl font-bold caret-transparent">📚 도서 특전 행사 모아보기</h1>
           <SearchBar
             onSearch={(query) => {
               setSearchQuery(query)
@@ -67,7 +67,7 @@ export default function IntegrationsPage() {
             }}
           />
         </div>
-        <div className="flex-1 overflow-auto px-4 md:px-6">
+        <div className="flex-1 overflow-auto px-4 md:px-6 outline-none">
           <IntegrationGrid integrations={paginatedEvents} />
         </div>
         <div className="p-4 md:p-6 border-t">
