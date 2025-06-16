@@ -24,7 +24,10 @@ export default function IntegrationsPage() {
 
     fetch("/api/categories")
       .then(res => res.json())
-      .then(data => setCategories(data))
+      .then(data => {
+        const sorted = data.sort((a: string, b: string) => a.localeCompare(b, 'ko-KR'))
+        setCategories(sorted)
+      })
       .catch(err => console.error("카테고리 불러오기 실패", err))
   }, [])
 
