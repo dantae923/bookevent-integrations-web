@@ -53,7 +53,7 @@ export default function IntegrationsPage() {
         const sorted = data.sort((a: string, b: string) => {
           if (a === "All") return -1
           if (b === "All") return 1
-          a.localeCompare(b, 'ko-KR')
+          return a.localeCompare(b, 'ko-KR')
         })
         setCategories(sorted)
       })
