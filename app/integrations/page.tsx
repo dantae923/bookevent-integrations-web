@@ -19,13 +19,42 @@ export default function IntegrationsPage() {
   useEffect(() => {
     fetch("/api/integrations")
       .then(res => res.json())
-      .then(data => setEvents(data))
+      .then(data => {
+        // 시작일 추출 함수
+        const extractStartDate = (period: string): Date | null => {
+          const match = period?.match(/^(\d{4}\/\d{2}\/\d{2})/)
+          return match ? new Date(match[1]) : null
+        }
+
+        // 정렬 적용
+        const sorted = data.sort((a: Event, b: Event) => {
+          const dateA = extractStartDate(a.period ?? "")
+          const dateB = extractStartDate(b.period ?? "")
+
+          // 1. 시작일 내림차순
+          if (dateA && dateB) return dateB.getTime() - dateA.getTime()
+          if (dateA && !dateB) return -1
+          if (!dateA && dateB) return 1
+
+          // 2. 사이트 가나다순
+          const siteCompare = a.site.localeCompare(b.site, "ko-KR")
+          if (siteCompare !== 0) return siteCompare
+
+          // 3. 이벤트명 가나다순
+          return a.event_title.localeCompare(b.event_title, "ko-KR")
+        })
+        setEvents(sorted)
+      })
       .catch(err => console.error("API 오류:", err))
 
     fetch("/api/categories")
       .then(res => res.json())
       .then(data => {
-        const sorted = data.sort((a: string, b: string) => a.localeCompare(b, 'ko-KR'))
+        const sorted = data.sort((a: string, b: string) => {
+          if (a === "All") return -1
+          if (b === "All") return 1
+          a.localeCompare(b, 'ko-KR')
+        })
         setCategories(sorted)
       })
       .catch(err => console.error("카테고리 불러오기 실패", err))
@@ -33,13 +62,11 @@ export default function IntegrationsPage() {
 
   const filteredEvents = useMemo(() => {
     return events.filter((event) => {
-      const title = event.book_title ?? ""
-      const goods = event.special_goods ?? ""
+      const title = event.event_title ?? ""
       const categoryMatch = selectedCategory === "All" || event.site === selectedCategory
       return (
         categoryMatch &&
-        (title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          goods.toLowerCase().includes(searchQuery.toLowerCase()))
+        title.toLowerCase().includes(searchQuery.toLowerCase())
       )
     })
   }, [events, selectedCategory, searchQuery])
@@ -62,7 +89,7 @@ export default function IntegrationsPage() {
       />
       <main className="flex-1 flex flex-col overflow-hidden">
         <div className="p-4 md:p-6 space-y-4">
-          <h1 className="text-2xl font-bold caret-transparent">📚 도서 특전 행사 모아보기</h1>
+          <h1 className="text-2xl font-bold caret-transparent">📚 국내 도서 특전행사 모아보기</h1>
           <SearchBar
             onSearch={(query) => {
               setSearchQuery(query)
