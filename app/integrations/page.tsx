@@ -60,7 +60,7 @@ export default function IntegrationsPage() {
       .catch(err => console.error("카테고리 불러오기 실패", err))
 
       // ✅ IP 기록 (사이트 방문 카운트용)
-    fetch("/api/track-visit")
+    fetch("/api/log-visit")
       .then(res => res.json())
       .then(data => {
         if (data.status !== "ok") {
