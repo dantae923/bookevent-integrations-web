@@ -55,7 +55,7 @@ export default function IntegrationCard({ integration }: IntegrationCardProps) {
             rel="noopener noreferrer"
             className="text-xs text-blue-600 underline mt-auto"
           >
-            상품 보러가기 →
+            특전 보러가기
           </a>
         </div>
       </div>

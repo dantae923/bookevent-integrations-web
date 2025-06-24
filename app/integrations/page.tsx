@@ -58,6 +58,16 @@ export default function IntegrationsPage() {
         setCategories(sorted)
       })
       .catch(err => console.error("카테고리 불러오기 실패", err))
+
+      // ✅ IP 기록 (사이트 방문 카운트용)
+    fetch("/api/track-visit")
+      .then(res => res.json())
+      .then(data => {
+        if (data.status !== "ok") {
+          console.warn("방문자 기록 실패:", data)
+        }
+      })
+    .catch(err => console.error("IP 추적 오류:", err))
   }, [])
 
   const filteredEvents = useMemo(() => {
