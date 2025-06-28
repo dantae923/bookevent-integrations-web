@@ -1,20 +1,23 @@
-// app/page.tsx
 "use client"
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 
-export default function RootRedirectPage() {
+export default function RootRedirect() {
   const router = useRouter()
 
   useEffect(() => {
-    const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent)
-    router.replace(isMobile ? "/mobile" : "/integrations")
+    if (typeof window !== "undefined") {
+      const ua = navigator.userAgent
+      const isMobile = /iPhone|Android|Mobile/i.test(ua)
+
+      if (isMobile) {
+        router.replace("/mobile")
+      } else {
+        router.replace("/integrations")
+      }
+    }
   }, [router])
 
-  return (
-    <div style={{ padding: "3rem", textAlign: "center", color: "#888" }}>
-      이동 중입니다...
-    </div>
-  )
+  return null
 }
