@@ -7,7 +7,7 @@ export async function GET() {
       "SELECT DISTINCT site FROM events_active ORDER BY site"
     );
     const categories = result.rows.map((row) => row.site);
-    return NextResponse.json(["All", ...categories]);
+    return NextResponse.json(["전체", ...categories]);
   } catch (err) {
     console.error("❌ Category API 오류:", err);
     return NextResponse.json({ error: "DB query failed" }, { status: 500 });

@@ -11,8 +11,8 @@ const ITEMS_PER_PAGE = 30
 
 export default function IntegrationsPage() {
   const [events, setEvents] = useState<Event[]>([])
-  const [categories, setCategories] = useState<string[]>(["All"])
-  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [categories, setCategories] = useState<string[]>(["전체"])
+  const [selectedCategory, setSelectedCategory] = useState("전체")
   const [searchQuery, setSearchQuery] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -51,8 +51,8 @@ export default function IntegrationsPage() {
       .then(res => res.json())
       .then(data => {
         const sorted = data.sort((a: string, b: string) => {
-          if (a === "All") return -1
-          if (b === "All") return 1
+          if (a === "전체") return -1
+          if (b === "전체") return 1
           return a.localeCompare(b, 'ko-KR')
         })
         setCategories(sorted)
@@ -73,7 +73,7 @@ export default function IntegrationsPage() {
   const filteredEvents = useMemo(() => {
     return events.filter((event) => {
       const title = event.event_title ?? ""
-      const categoryMatch = selectedCategory === "All" || event.site === selectedCategory
+      const categoryMatch = selectedCategory === "전체" || event.site === selectedCategory
       return (
         categoryMatch &&
         title.toLowerCase().includes(searchQuery.toLowerCase())
