@@ -9,7 +9,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  matcher: ["/"], // "/" 진입 시에만 적용
 }
 
 export default nextConfig
