@@ -7,14 +7,23 @@ export default function RootRedirect() {
   const router = useRouter()
 
   useEffect(() => {
-    const isMobileUserAgent = /iPhone|Android|Mobile/i.test(navigator.userAgent)
-    const isSmallViewport = window.innerWidth <= 768
-    const isMobile = isMobileUserAgent || isSmallViewport
+    if (typeof window !== "undefined") {
+      const ua = navigator.userAgent
+      alert("📱 userAgent: " + navigator.userAgent)
 
-    if (isMobile) {
-      router.replace("/mobile")
-    } else {
-      router.replace("/integrations")
+      const isMobileUA = /iPhone|Android|Mobile/i.test(ua)
+      const isSmallWidth = window.innerWidth <= 768
+      const isMobileData = (navigator as any).userAgentData?.mobile === true
+
+      const isMobile = isMobileUA || isMobileData || isSmallWidth
+
+      const currentPath = window.location.pathname
+
+      if (isMobile && currentPath !== "/mobile") {
+        router.replace("/mobile")
+      } else if (!isMobile && currentPath !== "/integrations") {
+        router.replace("/integrations")
+      }
     }
   }, [router])
 
