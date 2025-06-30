@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { Event } from "../data/integrations"
 import IntegrationGrid from "./components/IntegrationGrid"
 import Pagination from "./components/Pagination"
@@ -10,6 +11,7 @@ import CategoryFilter from "./components/CategoryFilter"
 const ITEMS_PER_PAGE = 30
 
 export default function IntegrationsPage() {
+  const router = useRouter()
   const [events, setEvents] = useState<Event[]>([])
   const [categories, setCategories] = useState<string[]>(["전체"])
   const [selectedCategory, setSelectedCategory] = useState("전체")
@@ -17,6 +19,19 @@ export default function IntegrationsPage() {
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
+    // ✅ 먼저 모바일 여부 확인
+    const ua = navigator.userAgent
+    const isMobileUA = /iPhone|Android|Mobile/i.test(ua)
+    const isSmallWidth = window.innerWidth <= 768
+    const isMobileData = (navigator as any).userAgentData?.mobile === true
+    const isMobile = isMobileUA || isMobileData || isSmallWidth
+
+    if (isMobile) {
+      alert("📱 userAgent: " + navigator.userAgent)
+      router.replace("/mobile")
+      return  // 👈 아래 fetch 로직 실행 방지
+    }
+
     fetch("/api/integrations")
       .then(res => res.json())
       .then(data => {
