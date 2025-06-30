@@ -19,15 +19,13 @@ export default function IntegrationsPage() {
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     // ✅ 먼저 모바일 여부 확인
-    const ua = navigator.userAgent
-    const isMobileUA = /iPhone|Android|Mobile/i.test(ua)
-    const isSmallWidth = window.innerWidth <= 768
-    const isMobileData = (navigator as any).userAgentData?.mobile === true
-    const isMobile = isMobileUA || isMobileData || isSmallWidth
+    const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || (navigator as any).userAgentData?.mobile === true
 
     if (isMobile) {
-      alert("📱 userAgent: " + navigator.userAgent)
+      alert("📱모바일 화면으로 전환됩니다.")
       router.replace("/mobile")
       return  // 👈 아래 fetch 로직 실행 방지
     }
