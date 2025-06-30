@@ -25,7 +25,7 @@ export default function IntegrationsPage() {
     const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || (navigator as any).userAgentData?.mobile === true
 
     if (isMobile) {
-      alert("📱모바일 화면으로 전환됩니다.")
+      // alert("📱모바일 화면으로 전환됩니다.")
       router.replace("/mobile")
       return  // 👈 아래 fetch 로직 실행 방지
     }
