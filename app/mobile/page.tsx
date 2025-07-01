@@ -97,7 +97,7 @@ export default function Page() {
       <div className="bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-10">
         <div className="flex items-center gap-3 mb-3">
           <BookOpen className="w-6 h-6 text-blue-600" />
-          <h1 className="text-lg font-bold text-gray-900">국내 도서 특전행사</h1>
+          <h1 className="text-lg font-bold text-gray-900">특전도감</h1>
         </div>
 
         {/* Search Bar */}
