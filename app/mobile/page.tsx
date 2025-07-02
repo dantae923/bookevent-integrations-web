@@ -188,19 +188,35 @@ export default function Page() {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center gap-2 py-4">
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-          <Button
-            key={pageNum}
-            size="sm"
-            variant={currentPage === pageNum ? "default" : "outline"}
-            onClick={() => setCurrentPage(pageNum)}
-            className="px-3"
-          >
-            {pageNum}
-          </Button>
-        ))}
-      </div>
+      {totalPages > 1 && (
+        <div className="px-4 py-4 bg-white border-t border-gray-200">
+          <div className="flex items-center justify-center gap-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-1"
+            >
+              이전
+            </Button>
+
+            <span className="text-sm text-gray-600 font-medium">
+              Page {currentPage} of {totalPages}
+            </span>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+              disabled={currentPage === totalPages}
+              className="px-3 py-1"
+            >
+              다음
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Bottom Navigation Placeholder */}
       <div className="h-20"></div>
