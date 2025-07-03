@@ -1,14 +1,13 @@
 "use client"
 
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Event } from "../data/integrations"
-import { Search, Calendar, BookOpen, Heart, Share2 } from "lucide-react"
+import { Search, Calendar, BookOpen, Heart, Share2, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 const ITEMS_PER_PAGE = 20
 
@@ -90,6 +89,7 @@ export default function Page() {
 
   const totalPages = Math.ceil(filteredEvents.length / ITEMS_PER_PAGE)
   const paginatedEvents = filteredEvents.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -111,12 +111,27 @@ export default function Page() {
               setCurrentPage(1)
             }}
             className="pl-10 pr-4 py-2 w-full border-gray-300 rounded-lg"
+            ref={inputRef}
           />
+
+          {searchQuery && (
+            <button
+              onClick={() => {
+                setSearchQuery("")
+                setCurrentPage(1)
+                inputRef.current?.focus()
+              }}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              aria-label="검색어 지우기"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
         </div>
       </div>
 
       {/* Filter Tabs */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3 overflow-x-auto">
+      <div className="bg-white border-b border-gray-200 px-4 py-3 sticky top-[104px] z-10 overflow-x-auto">
         <div className="flex gap-2 pb-2 min-w-max">
           {categories.map((filter) => (
             <Button
@@ -189,7 +204,7 @@ export default function Page() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="px-4 py-4 bg-white border-t border-gray-200">
+        <div className="px-4 py-4 bg-white border-t border-gray-200 sticky bottom-0 z-10">
           <div className="flex items-center justify-center gap-4">
             <Button
               variant="outline"
