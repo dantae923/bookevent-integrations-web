@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Event } from "../data/integrations"
-import { Search, Calendar, BookOpen, Heart, Share2, X } from "lucide-react"
+import { Search, Calendar, BookOpen, Heart, Share2, X, ExternalLink, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -91,6 +91,10 @@ export default function Page() {
   const paginatedEvents = filteredEvents.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const handleSiteClick = (url: string) => {
+    window.open(url, "_blank", "noopener,noreferrer")
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -173,17 +177,17 @@ export default function Page() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between mb-2">
-                      <Badge variant="secondary" className="text-xs bg-blue-100 text-blue-700 mb-1">
+                      {/* <Badge variant="secondary" className="text-xs bg-blue-100 text-blue-700 mb-1">
                         {event.site}
-                      </Badge>
-                      <div className="flex gap-1">
+                      </Badge> */}
+                      {/* <div className="flex gap-1">
                         <Button variant="ghost" size="sm" className="p-1 h-auto">
                           <Heart className={`w-4 h-4 ${event.isLiked ? "fill-red-500 text-red-500" : "text-gray-400"}`} />
                         </Button>
                         <Button variant="ghost" size="sm" className="p-1 h-auto">
                           <Share2 className="w-4 h-4 text-gray-400" />
                         </Button>
-                      </div>
+                      </div> */}
                     </div>
                     <h3 className="font-medium text-sm text-gray-900 mb-1 line-clamp-2">{event.event_title}</h3>
                     <div className="space-y-1">
@@ -194,6 +198,21 @@ export default function Page() {
                         </div>
                       </div>
                     </div>
+                    {/* Site Name with Link */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1 text-xs text-gray-600">
+                        <Globe className="w-3 h-3" />
+                        <span>{event.site}</span>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleSiteClick(event.link)}
+                          className="p-1 h-auto text-blue-600 hover:text-blue-800 hover:bg-blue-50"                          >
+                          <span className="text-xs">바로가기</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </Button>
+                      </div>
                   </div>
                 </div>
               </CardContent>
