@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Calendar, ExternalLink, Globe } from "lucide-react"
 
 type Event = {
   image: string
@@ -46,17 +47,33 @@ export default function IntegrationCard({ integration }: IntegrationCardProps) {
           </div>
 
           {/* 카드 정보 */}
-          <div className="text-sm font-semibold">{integration.event_title}</div>
-          <div className="text-xs text-gray-500">사이트: {integration.site}</div>
-          <div className="text-xs text-gray-400">기간: {integration.period}</div>
-          <a
-            href={integration.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-blue-600 underline mt-auto"
+          <div 
+            className="font-medium text-sm text-gray-900 mb-2 line-clamp-2 h-10 overflow-hidden"
+            title={integration.event_title}
           >
-            특전 보러가기
-          </a>
+            {integration.event_title}
+          </div>
+          <div className="flex items-center gap-1 text-xs text-gray-500">
+            <Calendar className="w-3 h-3" />
+            <span>{integration.period}</span>
+          </div>
+          <div className="flex items-center justify-between text-xs text-gray-600">
+            {/* 사이트명 왼쪽 */}
+            <div className="flex items-center gap-1">
+              <Globe className="w-3 h-3" />
+              <span>{integration.site}</span>
+            </div>
+            {/* 바로가기 링크 오른쪽 */}
+            <a
+              href={integration.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-blue-500 hover:text-blue-800 underline"
+            >
+              <span>바로가기</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
         </div>
       </div>
 
