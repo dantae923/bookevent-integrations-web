@@ -38,6 +38,10 @@ export default function Page() {
         }
 
         const sorted = data.sort((a: Event, b: Event) => {
+          const createdA = new Date(a.created_time).getTime()
+          const createdB = new Date(b.created_time).getTime()
+          if (createdA !== createdB) return createdB - createdA  // 최신순
+          
           const dateA = extractStartDate(a.period ?? "")
           const dateB = extractStartDate(b.period ?? "")
 
@@ -93,6 +97,15 @@ export default function Page() {
 
   const handleSiteClick = (url: string) => {
     window.open(url, "_blank", "noopener,noreferrer")
+  }
+
+  const isNewEvent = (created_time: string) => {
+    const createdDate = new Date(created_time)
+    const now = new Date()
+    const diffInMs = now.getTime() - createdDate.getTime()
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24)
+    
+    return diffInDays <= 7
   }
 
   return (
@@ -177,6 +190,14 @@ export default function Page() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between mb-2">
+                      {isNewEvent(event.created_time) && (
+                        <Badge
+                          variant="default"
+                          className="text-xs bg-red-500 text-white px-2 py-0.5 blink-animation pointer-events-none select-none"
+                        >
+                          New
+                        </Badge>
+                      )}
                       {/* <Badge variant="secondary" className="text-xs bg-blue-100 text-blue-700 mb-1">
                         {event.site}
                       </Badge> */}

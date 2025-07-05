@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const result = await pool.query(
-      "SELECT id, site, event_title, link, image, period FROM events_active WHERE sold_out = 'N' AND is_active = 'Y'"
+      "SELECT id, site, event_title, link, image, period, created_time FROM events_active WHERE sold_out = 'N' AND is_active = 'Y'"
     );
     return NextResponse.json(result.rows);
   } catch (err) {

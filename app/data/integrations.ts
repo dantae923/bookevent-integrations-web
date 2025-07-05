@@ -5,4 +5,5 @@ export type Event = {
   link: string;
   image: string;
   period: string;
+  created_time: string;
 };

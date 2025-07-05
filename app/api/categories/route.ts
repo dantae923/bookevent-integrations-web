@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const result = await pool.query(
-      "SELECT DISTINCT site FROM events_active ORDER BY site"
+      "SELECT DISTINCT site FROM events_active WHERE sold_out = 'N' AND is_active = 'Y' ORDER BY site"
     );
     const categories = result.rows.map((row) => row.site);
     return NextResponse.json(["전체", ...categories]);
