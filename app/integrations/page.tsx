@@ -112,7 +112,7 @@ export default function IntegrationsPage() {
       />
       <main className="flex-1 flex flex-col overflow-hidden">
         <div className="p-4 md:p-6 space-y-4">
-          <h1 className="text-2xl font-bold caret-transparent">📚 특전도감</h1>
+          <h1 className="text-2xl font-bold caret-transparent">📚 특전바로가기</h1>
           <SearchBar
             onSearch={(query) => {
               setSearchQuery(query)
