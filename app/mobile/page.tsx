@@ -193,7 +193,7 @@ export default function Page() {
                       {isNewEvent(event.created_time) && (
                         <Badge
                           variant="default"
-                          className="text-xs bg-red-500 text-white px-2 py-0.5 blink-animation pointer-events-none select-none"
+                          className="text-xs bg-red-500 text-white px-2 py-0.5 animate-pulse pointer-events-none select-none"
                         >
                           New
                         </Badge>

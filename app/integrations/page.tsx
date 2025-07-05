@@ -41,6 +41,10 @@ export default function IntegrationsPage() {
 
         // 정렬 적용
         const sorted = data.sort((a: Event, b: Event) => {
+          const createdA = new Date(a.created_time).getTime()
+          const createdB = new Date(b.created_time).getTime()
+          if (createdA !== createdB) return createdB - createdA  // 최신순
+          
           const dateA = extractStartDate(a.period ?? "")
           const dateB = extractStartDate(b.period ?? "")
 

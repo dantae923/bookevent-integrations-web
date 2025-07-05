@@ -7,10 +7,20 @@ type Event = {
   site: string
   period: string
   link: string
+  created_time: string
 }
 
 type IntegrationCardProps = {
   integration: Event
+}
+
+const isNewEvent = (created_time: string) => {
+  const createdDate = new Date(created_time)
+  const now = new Date()
+  const diffInMs = now.getTime() - createdDate.getTime()
+  const diffInDays = diffInMs / (1000 * 60 * 60 * 24)
+    
+  return diffInDays <= 7
 }
 
 export default function IntegrationCard({ integration }: IntegrationCardProps) {
@@ -35,6 +45,14 @@ export default function IntegrationCard({ integration }: IntegrationCardProps) {
               tabIndex={-1}
               draggable={false}
             />
+            {/* New 배지 - 이미지 위 왼쪽 상단 */}
+            {isNewEvent(integration.created_time) && (
+              <div className="absolute top-2 left-2">
+                <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full font-medium shadow-sm animate-pulse pointer-events-none select-none">
+                  New
+                </span>
+              </div>
+            )}
             {/* 돋보기 버튼 */}
             {showZoomButton && (
               <button
